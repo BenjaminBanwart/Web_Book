@@ -45,7 +45,7 @@ namespace Web_Book.Controllers
             return View(obj);
         }
 
-        //GET
+        //GET for PUT
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -80,6 +80,25 @@ namespace Web_Book.Controllers
             }
 
             return View(obj);
+        }
+
+        //DELETE
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var categoryFromDb = _db.Categories.Find(id);
+
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+
+            _db.Categories.Remove(categoryFromDb);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
